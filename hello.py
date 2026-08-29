@@ -1,0 +1,1 @@
+print("Hello World! Welcome to CSE 310.")
