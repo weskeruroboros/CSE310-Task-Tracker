@@ -1,0 +1,10 @@
+[
+    {
+        "id": 1,
+        "title": "cse 310",
+        "category": "reading",
+        "hours": 3.0,
+        "status": "Completed",
+        "created_at": "2026-09-05 11:39"
+    }
+]
