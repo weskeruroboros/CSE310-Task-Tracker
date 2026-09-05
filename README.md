@@ -1,23 +1,25 @@
-# Overview
+# CSE 310 – Web Application Module: Task Tracker
 
-**Project Title:** CSE 310 Task & Study Tracker
+## Overview
+Task Tracker is a lightweight dynamic web application built using Python and Flask. It allows users to manage daily tasks, track completion statuses, and view real-time statistics regarding task progress.
 
-This software is an interactive, command-line productivity application built to manage coursework tasks, assign completion time estimates, track completion statuses, and calculate study progress summaries.
+## Web Application Features
+* **Dynamic Web Pages:** Serves multiple HTML views using Jinja2 templating (`/`, `/add`, `/stats`).
+* **User Interactivity:** Form handling allows users to dynamically create new tasks and toggle task completion.
+* **Database & Storage:** Persists task data in a structured JSON file (`tasks.json`).
+* **Local Test Server:** Runs locally via Flask's built-in WSGI development server.
 
-The purpose of creating this software is to establish a structured Python application that practices essential software engineering concepts, including modular function design, interactive CLI menu navigation, state management with data collections (lists and dictionaries), and persistent storage using JSON file handling.
+## Development Environment
+* **Language:** Python 3
+* **Framework:** Flask
+* **Frontend:** HTML5 / CSS3 (Jinja2 Templates)
+* **Storage:** JSON File I/O
 
-[Software Demo Video](https://youtu.be/YXcj0y_rtZM)
+## Useful Websites
+* [Flask Documentation](https://flask.palletsprojects.com/)
+* [Jinja Template Documentation](https://jinja.palletsprojects.com/)
 
-# Development Environment
-
-* **Tools:** Visual Studio Code with the Python extension, Windows PowerShell terminal, and Git / GitHub for version control.
-* **Language & Libraries:** Python 3 (utilizing standard libraries: `json`, `os`, and `datetime`).
-
-# Operational Instructions
-
-To run this application on your local machine:
-
-1. Ensure Python 3 is installed on your system.
-2. Clone this repository to your local folder:
-   ```bash
-   git clone [https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git)
+## Future Work
+* Integrate a full SQL database (PostgreSQL / SQLite).
+* Add user authentication and login sessions.
+* Implement task deadline alerts and priority sorting.

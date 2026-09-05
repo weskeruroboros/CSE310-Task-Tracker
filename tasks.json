@@ -1,10 +1,14 @@
 [
     {
         "id": 1,
-        "title": "cse 310",
-        "category": "reading",
-        "hours": 3.0,
-        "status": "Completed",
-        "created_at": "2026-09-05 11:39"
+        "title": "Complete CSE 310 Module 2 Submission",
+        "category": "School",
+        "status": "Pending"
+    },
+    {
+        "id": 2,
+        "title": "task",
+        "category": "work",
+        "status": "Pending"
     }
 ]

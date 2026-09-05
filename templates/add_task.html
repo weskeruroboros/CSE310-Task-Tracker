@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Add a New Task</h2>
+<form method="POST" action="/add">
+    <p>
+        <label>Task Title:</label><br>
+        <input type="text" name="title" required placeholder="e.g. Write video script" style="width: 80%; padding: 8px;">
+    </p>
+    <p>
+        <label>Category:</label><br>
+        <input type="text" name="category" placeholder="e.g. School, Work" style="width: 80%; padding: 8px;">
+    </p>
+    <button type="submit" class="btn" style="border:none; cursor:pointer;">Save Task</button>
+</form>
+{% endblock %}

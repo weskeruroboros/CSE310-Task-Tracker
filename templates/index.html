@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Tasks</h2>
+<ul>
+    {% for task in tasks %}
+        <li class="{{ task.status }}">
+            <span>
+                <strong>{{ task.title }}</strong> <i>({{ task.category }})</i> - {{ task.status }}
+            </span>
+            <a href="/complete/{{ task.id }}" class="btn">Toggle Status</a>
+        </li>
+    {% else %}
+        <li>No tasks found. Add one above!</li>
+    {% endfor %}
+</ul>
+{% endblock %}
