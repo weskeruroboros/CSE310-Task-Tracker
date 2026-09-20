@@ -1,20 +1,28 @@
-# CSE 310 – Web Application Module: Task Tracker
+# Overview
 
-## Overview
-Task Tracker is a lightweight dynamic web application built using Python and Flask. It allows users to manage daily tasks, track completion statuses, and view real-time statistics regarding task progress.
+This project implements a dynamic, multi-page Task Tracker web application built using Python, Flask, and an SQLite relational database managed via Flask-SQLAlchemy. 
 
-## Video Demonstration
-* [Watch the Task Tracker Walkthrough Video](https://youtu.be/l1uTUSwpOLE)
+This project was selected to learn the basics of web development, database design, full CRUD operations, and SQL aggregate functions through a practical productivity application.
 
-## Web Application Features
-* **Dynamic Web Pages:** Serves multiple HTML views using Jinja2 templating (`/`, `/add`, `/stats`).
-* **User Interactivity:** Form handling allows users to dynamically create new tasks and toggle task completion.
-* **Database & Storage:** Persists task data in a structured JSON file (`tasks.json`).
-* **Local Test Server:** Runs locally via Flask's built-in WSGI development server.
+[Software Demo Video](https://youtu.be/QYPshOg4IW8)
 
-## How to Run
-1. Ensure Python 3 and Flask are installed on your system.
-2. Open your terminal in the project root directory.
-3. Start the application by running:
-   ```bash
-   python app.py
+# Development Environment
+
+- Python version: 3.x (with Flask and Flask-SQLAlchemy)
+- Visual Studio Code - including Python extensions
+
+To run the project run this in a command prompt
+
+```bash
+python app.py
+
+# Useful Websites
+
+- [Flask Documentation](https://flask.palletsprojects.com/en/stable/)
+- [Flask-SQLAlchemy Documentation](https://flask-sqlalchemy.readthedocs.io/en/stable/)
+- [Python Official Website](https://www.python.org/)
+
+
+# Future Work
+
+-Complete more task features, such as adding a secondary category table to demonstrate SQL table joins and implementing date-time range filtering.

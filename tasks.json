@@ -9,6 +9,12 @@
         "id": 2,
         "title": "task",
         "category": "work",
-        "status": "Pending"
+        "status": "Completed"
+    },
+    {
+        "id": 3,
+        "title": "new task",
+        "category": "school",
+        "status": "Completed"
     }
 ]

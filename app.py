@@ -1,74 +1,99 @@
 from flask import Flask, render_template, request, redirect, url_for
-import json
-import os
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
+# Initialize Flask application
 app = Flask(__name__)
-DATA_FILE = 'tasks.json'
 
-def load_tasks():
-    """Reads tasks from the JSON file persistence layer."""
-    if not os.path.exists(DATA_FILE):
-        return []
-    with open(DATA_FILE, 'r') as f:
-        try:
-            return json.load(f)
-        except json.JSONDecodeError:
-            return []
+# Configure SQLite database URI
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-def save_tasks(tasks):
-    """Saves updated tasks list back to JSON file storage."""
-    with open(DATA_FILE, 'w') as f:
-        json.dump(tasks, f, indent=4)
+# Initialize SQLAlchemy extension
+db = SQLAlchemy(app)
 
-# PAGE 1: View Tasks & Toggle Completion
+# Define the Task relational database model
+class Task(db.Model):
+    """Database model representing individual tasks in the system."""
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(150), nullable=False)
+    category = db.Column(db.String(50), nullable=False, default='General')
+    status = db.Column(db.String(20), nullable=False, default='Pending')
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"<Task {self.id}: {self.title}>"
+
+# Automatically create database tables within application context
+with app.app_context():
+    db.create_all()
+
+# PAGE 1: View Tasks & Retrieve Data
 @app.route('/')
 def home():
-    """Home route displaying all tasks loaded from persistent storage."""
-    tasks = load_tasks()
+    """Home route retrieving all task records from the relational database."""
+    tasks = Task.query.all()
     return render_template('index.html', tasks=tasks)
 
-# PAGE 2: Add Task Page (Interactive User Input Form)
+# PAGE 2: Add Task Page (Insert Data)
 @app.route('/add', methods=['GET', 'POST'])
 def add_task():
-    """Route handling GET to display form and POST to save new user input task."""
+    """Route handling GET to display input form and POST to insert a new task into the database."""
     if request.method == 'POST':
         title = request.form.get('title', '').strip()
         category = request.form.get('category', 'General').strip()
+        
         if title:
-            tasks = load_tasks()
-            new_task = {
-                'id': len(tasks) + 1,
-                'title': title,
-                'category': category,
-                'status': 'Pending'
-            }
-            tasks.append(new_task)
-            save_tasks(tasks)
+            new_task = Task(title=title, category=category, status='Pending')
+            db.session.add(new_task)
+            db.session.commit()
             return redirect(url_for('home'))
+            
     return render_template('add_task.html')
 
-# Action Route: Toggle Task Status
+# Action Route: Toggle Task Status (Modify Data - Status)
 @app.route('/complete/<int:task_id>')
 def complete_task(task_id):
-    """Action route modifying task completion status upon user interaction."""
-    tasks = load_tasks()
-    for task in tasks:
-        if task['id'] == task_id:
-            task['status'] = 'Completed' if task['status'] == 'Pending' else 'Pending'
-            break
-    save_tasks(tasks)
+    """Action route updating/modifying a specific task's completion status in the database."""
+    task = Task.query.get_or_404(task_id)
+    task.status = 'Completed' if task.status == 'Pending' else 'Pending'
+    db.session.commit()
     return redirect(url_for('home'))
 
-# PAGE 3: Third Dynamically Generated Page (Statistics Summary)
+# Action Route: Edit Task Details (Modify Data - Text/Category)
+@app.route('/edit/<int:task_id>', methods=['GET', 'POST'])
+def edit_task(task_id):
+    """Route handling GET to display edit form and POST to update task title and category."""
+    task = Task.query.get_or_404(task_id)
+    if request.method == 'POST':
+        new_title = request.form.get('title', '').strip()
+        new_category = request.form.get('category', 'General').strip()
+        
+        if new_title:
+            task.title = new_title
+            task.category = new_category
+            db.session.commit()
+            return redirect(url_for('home'))
+            
+    return render_template('edit_task.html', task=task)
+
+# Action Route: Delete Task (Delete Data)
+@app.route('/delete/<int:task_id>')
+def delete_task(task_id):
+    """Action route removing/deleting a task record from the database."""
+    task = Task.query.get_or_404(task_id)
+    db.session.delete(task)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+# PAGE 3: Third Dynamically Generated Page (Statistics using SQL Aggregate Functions)
 @app.route('/stats')
 def stats():
-    """Third dynamic route aggregating real-time data metrics for user tasks."""
-    tasks = load_tasks()
-    total = len(tasks)
-    completed = sum(1 for t in tasks if t.get('status') == 'Completed')
-    pending = total - completed
+    """Third dynamic route using SQL aggregate functions (COUNT) to summarize database metrics."""
+    total = db.session.query(db.func.count(Task.id)).scalar()
+    completed = db.session.query(db.func.count(Task.id)).filter(Task.status == 'Completed').scalar()
+    pending = (total if total is not None else 0) - (completed if completed is not None else 0)
     return render_template('stats.html', total=total, completed=completed, pending=pending)
 
 if __name__ == '__main__':
-    # Launches the local test server at http://127.0.0.1:5000/
     app.run(debug=True)

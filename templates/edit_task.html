@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Task</title>
+    <title>Edit Task</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -46,7 +46,7 @@
             font-size: 16px;
         }
         button {
-            background-color: #2ecc71;
+            background-color: #3498db;
             color: white;
             border: none;
             padding: 10px 15px;
@@ -63,7 +63,7 @@
     </style>
 </head>
 <body>
-    <h1>Add New Task</h1>
+    <h1>Edit Task</h1>
     <nav>
         <a href="{{ url_for('home') }}">Home</a> | 
         <a href="{{ url_for('add_task') }}">Add Task</a> | 
@@ -73,12 +73,12 @@
 
     <form method="POST">
         <label for="title">Task Title:</label>
-        <input type="text" id="title" name="title" required>
+        <input type="text" id="title" name="title" value="{{ task.title }}" required>
         
         <label for="category">Category:</label>
-        <input type="text" id="category" name="category" value="General" required>
+        <input type="text" id="category" name="category" value="{{ task.category }}" required>
         
-        <button type="submit">Add Task</button>
+        <button type="submit">Update Task</button>
     </form>
 </body>
 </html>
