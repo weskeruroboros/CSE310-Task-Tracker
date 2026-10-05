@@ -11,6 +11,7 @@ This project was selected to learn the core principles of C# web development, MV
 - Framework & Language: C# / .NET 8.0 SDK (ASP.NET Core MVC & Entity Framework Core)
 - Database: SQLite
 - Development Tool: Visual Studio Code (including C# Dev Kit extensions)
+- GitHub Repository: [https://github.com/weskeruroboros/CSE310-Task-Tracker.git]
 
 To run the project, execute the following commands in your terminal:
 
